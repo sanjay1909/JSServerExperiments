@@ -4,6 +4,11 @@
     </head>
     <body>
         <button onclick="AJAXRequestForPost()"> AJAX Post </button>
+
+        <form action="./index.html" method="POST">
+            <input type="hidden" name="type" value="Form post"/>
+            <button type="submit">Form Post </button>
+        </form>
         <script type="application/javascript">
 
             function createAJAXRequestFor (url,method,headers,params) {
@@ -24,19 +29,32 @@
                         resolve('There was a network error.');
                     };
                     request.open(method, url,true);
-                    headers.map(function(header){
-                        request.setRequestHeader(header.key, header.value);
+                    var keys = Object.keys(headers);
+                    keys.map(function(key,index){
+                        request.setRequestHeader(key, headers[key]);
                     });
-                    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                    request.send(params);
+                    request.send(requestBuildQueryString(params));
                 });
             }
 
+            function requestBuildQueryString(params){
+                var queryString = "";
+                var paramKeys = Object.keys(params);
+                paramKeys.map(function(key,index){
+                    var keyValue = key  + "=" + params[key];
+                    if(index !== paramKeys.length - 1)
+                        queryString = queryString + keyValue + '&';
+                    else
+                        queryString = queryString + keyValue ;
+                });
+                return queryString;
+            }
+
             function AJAXRequestForPost(){
-                createAJAXRequestFor('./index.html','POST',[{
+                createAJAXRequestFor('./index.html','POST',{
                     'Content-type': 'application/x-www-form-urlencoded'
-                }],{
-                    sender: 'browser client'
+                },{
+                    type: 'AJAX Post'
                 }).then(function(result){
                     console.log(result)
                 });
