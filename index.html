@@ -17,7 +17,7 @@
                     request.onreadystatechange = function(){
                         if(request.readyState === 4){
                             if (request.status === 200) {
-                                resolve(request.responseText);
+                                resolve(request.responseURL || request.responseText);
                             }
                             else {
                                 resolve(request.statusText);
@@ -55,8 +55,9 @@
                     'Content-type': 'application/x-www-form-urlencoded'
                 },{
                     type: 'AJAX Post'
-                }).then(function(result){
-                    console.log(result)
+                }).then(function(url){
+                    //redirect to new url
+                    window.location.href = url;
                 });
             }
 

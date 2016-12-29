@@ -62,7 +62,7 @@ app.post('/index.html', function (req, res) {
         * */
         res.redirect(302,'./RedirectedPage.html');
     } else {
-        res.send('AJAX Post will not refresh the page');
+        res.redirect(302,'./AJAXRedirect.html');
     }
 
 });
