@@ -5,7 +5,7 @@
     <body>
         <button onclick="AJAXRequestForPost()"> AJAX Post </button>
 
-        <form action="./index.html" method="POST">
+        <form action="./index.html" method="POST" target="_blank">
             <input type="hidden" name="type" value="Form post"/>
             <button type="submit">Form Post </button>
         </form>
@@ -57,7 +57,7 @@
                     type: 'AJAX Post'
                 }).then(function(url){
                     //redirect to new url
-                    window.location.href = url;
+                    window.open(url, '_blank');
                 });
             }
 
