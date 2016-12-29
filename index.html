@@ -1,0 +1,47 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <button onclick="AJAXRequestForPost()"> AJAX Post </button>
+        <script type="application/javascript">
+
+            function createAJAXRequestFor (url,method,headers,params) {
+                return new Promise(function(resolve, reject) {
+                    var request = new XMLHttpRequest();
+                    request.onreadystatechange = function(){
+                        if(request.readyState === 4){
+                            if (request.status === 200) {
+                                resolve(request.responseText);
+                            }
+                            else {
+                                resolve(request.statusText);
+                            }
+                        }
+                    };
+
+                    request.onerror = function() {
+                        resolve('There was a network error.');
+                    };
+                    request.open(method, url,true);
+                    headers.map(function(header){
+                        request.setRequestHeader(header.key, header.value);
+                    });
+                    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    request.send(params);
+                });
+            }
+
+            function AJAXRequestForPost(){
+                createAJAXRequestFor('./index.html','POST',[{
+                    'Content-type': 'application/x-www-form-urlencoded'
+                }],{
+                    sender: 'browser client'
+                }).then(function(result){
+                    console.log(result)
+                });
+            }
+
+        </script>
+    </body>
+</html>

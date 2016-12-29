@@ -3,14 +3,24 @@
 * that provides a robust set of features for web and mobile applications
 * */
 var express = require("express");
+var path = require("path");
 
 var app = express();
+
+/*
+* To serve static files such as images, CSS files, and JavaScript files,
+* use the express.static built-in middleware function in Express.
+*
+* failing to initiate the static path, will treat html or any file as
+* end points and render only those that are passed in res.send("i got renderered")
+* */
+app.use(express.static(path.join(__dirname, './')));
 
 /*
 * Routing refers to the definition of application end points (URIs)
 * and how they respond to client request
 * */
-app.get('/', function (req, res) {
+app.get('/index.html', function (req, res) {
     /*
      * Default Response Headers for Express
      * 1. connection: keep-alive
@@ -19,10 +29,10 @@ app.get('/', function (req, res) {
      * 4. ETag:W/"2f-hkMaYB5nNxRiNce+hEnZQw"
      * 5. content-type:text/html; charset=utf-8
      * */
-    res.send('Get Request handler');
+    res.send("Static Resource served from ./ dir");
 });
 
-app.post('/', function (req, res) {
+app.post('/index.html', function (req, res) {
     /*
      * Default Response Headers for Express
      * 1. connection: keep-alive
