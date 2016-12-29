@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/sanjay1909/JSServerExperiments/issues"
   },
-  "homepage": "https://github.com/sanjay1909/JSServerExperiments#readme"
+  "homepage": "https://github.com/sanjay1909/JSServerExperiments#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
