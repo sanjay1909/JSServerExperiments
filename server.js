@@ -35,25 +35,32 @@ app.use(bodyParser.urlencoded({
 }));
 
 /*
-* Routing refers to the definition of application end points (URIs)
-* and how they respond to client request
+* GET Method initiated other than front end, code will not reach here
+* for example, refresh a page is GET method,
+* redirect from another page is GET request
+* Those calls will not come to this routing
 * */
 app.get('/index.html', function (req, res) {
-    /*
-     * Default Response Headers for Express
-     * 1. connection: keep-alive
-     * 2. Content-Length: xxx
-     * 3. Date:Thu, 29 Dec 2016 06:03:52 GMT
-     * 4. ETag:W/"2f-hkMaYB5nNxRiNce+hEnZQw"
-     * 5. content-type:text/html; charset=utf-8
-     * */
+    console.log("Static Resource served from ./ dir");
+    res.send("Static Resource served from ./ dir");
+});
+
+app.get('/RedirectedPage.html', function (req, res) {
+    console.log("Static Resource served from ./ dir");
     res.send("Static Resource served from ./ dir");
 });
 
 app.post('/index.html', function (req, res) {
     console.log(req.body);
     if(req.body.type === 'Form post'){
-        res.send('Form response will refresh the page content being me');
+        /*
+        * redirect is GET request to that url
+        * You can't POST using a redirect.
+        * By definition a redirect means the server sending a 302 redirect HTTP status code
+        * to the client with the new location
+        * so that the client issues a GET request to this new location
+        * */
+        res.redirect(302,'./RedirectedPage.html');
     } else {
         res.send('AJAX Post will not refresh the page');
     }
